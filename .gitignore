@@ -1,0 +1,5 @@
+# Pre-compiled files
+__pycache__/
+
+# Configuration file
+credentials.json
