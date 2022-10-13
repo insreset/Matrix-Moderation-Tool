@@ -28,8 +28,11 @@ class Moderator(AsyncClient):
 		print(f"{room.user_name(event.sender)} | {formatted_body}"[:80])
 		# Uncomment the following code to allow your bot move the room read marker:
 		# await self.room_read_markers(room.room_id, event.event_id, event.event_id)
-		if (antispam.is_spam(formatted_body)):
-			await self.room_redact(room.room_id, event.event_id, "autofilter")
+		try:
+			if (antispam.is_spam(formatted_body)):
+				await self.room_redact(room.room_id, event.event_id, "autofilter")
+		except TypeError:
+			pass
 
 	# We're running the __init__ method defined in AsyncClient with our new callback
 	def __init__(self, homeserver, user="", device_id="",

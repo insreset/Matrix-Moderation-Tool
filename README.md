@@ -1,6 +1,6 @@
 # Matrix Moderation Tool
 
-This program allows you to protect your matrix room from cryptocurrency freaks and other spammers.
+This program (a matrix bot) allows you to protect your moderated rooms from cryptocurrency freaks and other spammers. The program uses a Bayesian antispam classifier to filter messages.
 
 ## What dependencies are required?
 
@@ -18,11 +18,11 @@ Open a Terminal and type (or copy / paste) the following commands in:
 ```bash
 pip install antispam matrix-nio
 git clone https://github.com/insreset/Matrix-Moderation-Tool.git
-cd Matrix-Moderation-Tool 
+cd Matrix-Moderation-Tool
 python3 main.py
 ```
 
-Create a new matrix account with moderator privileges in your room and enter the credentials.
+Create a new matrix account with moderator privileges in your room(s) and enter the credentials.
 
 ## Contact
 

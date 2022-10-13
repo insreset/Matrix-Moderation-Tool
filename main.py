@@ -48,21 +48,22 @@ async def main() -> None:
 	if not os.path.exists(CONFIG_FILE):
 		print("First time use. Did not find credential file.")
 		homeserver = "https://matrix.example.org"
-		homeserver = input(f"Enter your homeserver URL: [{homeserver}] ")
-		if not (homeserver.startswith("https://") or homeserver.startswith("http://")):
-			homeserver = "https://" + homeserver
+		homeserver = input(f"Enter your server address: [{homeserver}] ")
 		user_id = "@user:example.org"
 		user_id = input(f"Enter your full user ID: [{user_id}] ")
 		device_name = "matrix-nio"
 		device_name = input(f"Choose a name for this device: [{device_name}] ")
 		client = Moderator(homeserver, user_id)
-		pw = getpass.getpass()
-		resp = await client.login(pw, device_name=device_name)
+		password = getpass.getpass()
+		try:
+			resp = await client.login(password, device_name)
+		except Exception:
+			print(f"Failed to connect: {homeserver}")
+			sys.exit(1)
 		# check that we logged in succesfully
 		if isinstance(resp, LoginResponse):
 			write_credentials(resp, homeserver)
 		else:
-			print(f'homeserver = "{homeserver}"; user = "{user_id}"')
 			print(f"Failed to log in: {resp}")
 			sys.exit(1)
 		print("Logged in using a password. Credentials were stored.")
@@ -77,6 +78,6 @@ async def main() -> None:
 			client.device_id = config["device_id"]
 		print("Logged in using stored credentials.")
 	# Start the bot with 30 millisecond timeout
-	await client.sync_forever(timeout=30000)
+	await client.sync_forever(30000)
 
-asyncio.run(main())
+asyncio.get_event_loop().run_until_complete(main())
